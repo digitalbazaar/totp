@@ -6,7 +6,7 @@ import Benchmark from 'benchmark';
 const suite = new Benchmark.Suite();
 
 import {
-  generateSecret, generateToken, verify
+  generateSecret, generateToken
 } from '../lib/index.js';
 
 suite
