@@ -1,6 +1,11 @@
 {
   "name": "@digitalbazaar/totp",
   "version": "0.0.1-0",
+  "type": "module",
+  "exports": "./lib/index.js",
+  "browser": {
+    "./lib/crypto.js": "./lib/crypto-browser.js"
+  },
   "description": "Time-based One-time Password (TOTP) Utilities",
   "license": "BSD-3-Clause",
   "author": {
@@ -19,8 +24,6 @@
   "keywords": [
     "totp"
   ],
-  "type": "module",
-  "exports": "./lib/index.js",
   "files": [
     "lib/**/*.js"
   ],
