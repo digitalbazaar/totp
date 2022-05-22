@@ -114,11 +114,129 @@ describe('totp', () => {
   });
 
   describe('verify', () => {
-    it('should verify a TOTP token', async () => {
-      // FIXME:
+    it('should verify with default params', async () => {
+      const {secret} = await generateSecret();
+      const {token} = await generateToken({secret});
+      const result = await verify({token, secret, delta: 0});
+      should.exist(result);
+      result.should.equal(true);
     });
-    it('should reject an invalid TOTP token', async () => {
-      // FIXME:
+    it('should not verify with default params', async () => {
+      const {secret} = await generateSecret();
+      let {token} = await generateToken({secret});
+      token = (token[0] === '1' ? '0' : '1') + token.slice(1);
+      const result = await verify({token, secret, delta: 0});
+      should.exist(result);
+      result.should.equal(false);
+    });
+    it('should verify with SHA-1', async () => {
+      const algorithm = 'SHA-1';
+      const {secret} = await generateSecret();
+      const {token} = await generateToken({secret, algorithm});
+      const result = await verify({token, secret, algorithm});
+      should.exist(result);
+      result.should.equal(true);
+    });
+    it('should not verify with SHA-1', async () => {
+      const algorithm = 'SHA-1';
+      const {secret} = await generateSecret();
+      let {token} = await generateToken({secret, algorithm});
+      token = (token[0] === '1' ? '0' : '1') + token.slice(1);
+      const result = await verify({token, secret, algorithm, delta: 0});
+      should.exist(result);
+      result.should.equal(false);
+    });
+    it('should verify with SHA-256', async () => {
+      const algorithm = 'SHA-256';
+      const {secret} = await generateSecret();
+      const {token} = await generateToken({secret, algorithm});
+      const result = await verify({token, secret, algorithm});
+      should.exist(result);
+      result.should.equal(true);
+    });
+    it('should not verify with SHA-256', async () => {
+      const algorithm = 'SHA-256';
+      const {secret} = await generateSecret();
+      let {token} = await generateToken({secret, algorithm});
+      token = (token[0] === '1' ? '0' : '1') + token.slice(1);
+      const result = await verify({token, secret, algorithm, delta: 0});
+      should.exist(result);
+      result.should.equal(false);
+    });
+    it('should verify with SHA-512', async () => {
+      const algorithm = 'SHA-512';
+      const {secret} = await generateSecret();
+      const {token} = await generateToken({secret, algorithm});
+      const result = await verify({token, secret, algorithm});
+      should.exist(result);
+      result.should.equal(true);
+    });
+    it('should not verify with SHA-512', async () => {
+      const algorithm = 'SHA-512';
+      const {secret} = await generateSecret();
+      let {token} = await generateToken({secret, algorithm});
+      token = (token[0] === '1' ? '0' : '1') + token.slice(1);
+      const result = await verify({token, secret, algorithm, delta: 0});
+      should.exist(result);
+      result.should.equal(false);
+    });
+    it('should fail with no token', async () => {
+      const {secret} = await generateSecret();
+      let result;
+      let err;
+      try {
+        result = await verify({secret});
+      } catch(e) {
+        err = e;
+      }
+      should.not.exist(result);
+      should.exist(err);
+      err.name.should.equal('TypeError');
+      err.message.should.equal('"token" must be a string.');
+    });
+    it('should fail with token length === 0', async () => {
+      const {secret} = await generateSecret();
+      let result;
+      let err;
+      try {
+        result = await verify({token: '', secret});
+      } catch(e) {
+        err = e;
+      }
+      should.not.exist(result);
+      should.exist(err);
+      err.name.should.equal('Error');
+      err.message.should.equal('"token" length must be > 0 and <= 10.');
+    });
+    it('should fail with token length > 10', async () => {
+      const {secret} = await generateSecret();
+      let result;
+      let err;
+      try {
+        result = await verify({token: '01234567891', secret});
+      } catch(e) {
+        err = e;
+      }
+      should.not.exist(result);
+      should.exist(err);
+      err.name.should.equal('Error');
+      err.message.should.equal('"token" length must be > 0 and <= 10.');
+    });
+    it('should fail with no secret', async () => {
+      const {secret} = await generateSecret();
+      const {token} = await generateToken({secret});
+      let result;
+      let err;
+      try {
+        result = await verify({token});
+      } catch(e) {
+        err = e;
+      }
+      should.not.exist(result);
+      should.exist(err);
+      err.name.should.equal('TypeError');
+      err.message.should.equal(
+        '"secret" must be Uint8Array or base32-encoded string.');
     });
   });
 
@@ -177,7 +295,8 @@ describe('totp', () => {
       should.not.exist(result);
       should.exist(err);
       err.name.should.equal('TypeError');
-      err.message.should.equal('"secret" must be a string or Uint8Array.');
+      err.message.should.equal(
+        '"secret" must be Uint8Array or base32-encoded string.');
     });
   });
 
