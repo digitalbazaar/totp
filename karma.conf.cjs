@@ -1,8 +1,7 @@
 /*
- * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
 module.exports = function(config) {
-
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
@@ -13,7 +12,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/*.spec.js'
+      'tests/*.spec.js'
     ],
 
     // list of files to exclude
@@ -22,23 +21,13 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/*.js': ['webpack', 'sourcemap']
+      //'tests/*.js': ['webpack', 'babel', 'sourcemap']
+      'tests/*.js': ['webpack', 'sourcemap']
     },
 
     webpack: {
-      //mode: 'production',
       mode: 'development',
-      devtool: 'inline-source-map',
-      node: {
-        // Needed to address jsonld.js's usage of 'global', until that's fixed
-        global: true
-      },
-      resolve: {
-        fallback: {
-          url: false,
-          crypto: false
-        }
-      }
+      devtool: 'inline-source-map'
     },
 
     // test results reporter to use
@@ -58,7 +47,7 @@ module.exports = function(config) {
     //   config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-    // enable / disable watching file and executing test whenever any
+    // enable / disable watching file and executing tests whenever any
     // file changes
     autoWatch: false,
 
@@ -68,7 +57,7 @@ module.exports = function(config) {
     browsers: ['ChromeHeadless'],
 
     // Continuous Integration mode
-    // if true, Karma captures browsers, runs the test and exits
+    // if true, Karma captures browsers, runs the tests and exits
     singleRun: true,
 
     // Concurrency level

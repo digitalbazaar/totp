@@ -1,4 +1,4 @@
-# isomorphic-js-lib-template Changelog
+# totp Changelog
 
 ## 1.0.0 - TBD
 
