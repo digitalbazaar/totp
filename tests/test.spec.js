@@ -182,30 +182,66 @@ describe('totp', () => {
   });
 
   describe('fromKeyUri', () => {
-    // it('should pass', async () => {
-    //   const params = await generateSecret();
-    //   toKeyUri({
-    //     ...params,
-    //     accountname: 'test@site.example'
-    //   });
-    //   // FIXME:
-    // });
-    // it('should pass with custom params', async () => {
-    //   const params = await generateSecret();
-    //   toKeyUri({
-    //     ...params,
-    //     accountname: 'test@site.example'
-    //   });
-    //   // FIXME:
-    // });
-    it('should fail without an accountname', async () => {
-      // FIXME:
+    it('should pass', async () => {
+      const secret = 'G4NYN7TPBY7ONUNDXIHHW4FVZI';
+      const uri = `otpauth://totp/test@site.example?secret=${secret}`;
+      const result = fromKeyUri({uri});
+      should.exist(result);
+      result.should.be.an('object');
+      result.should.include.keys([
+        'secret', 'algorithm', 'digits', 'period', 'accountname'
+      ]);
+      result.accountname.should.equal('test@site.example');
+      result.algorithm.should.equal('SHA-1');
+      result.digits.should.equal(6);
+      result.period.should.equal(30);
+      result.secret.should.equal(secret);
+    });
+    it('should pass with custom params', async () => {
+      const secret = 'G4NYN7TPBY7ONUNDXIHHW4FVZI';
+      const uri = 'otpauth://totp/AnIssuer:test@site.example?secret=' +
+        'G4NYN7TPBY7ONUNDXIHHW4FVZI&algorithm=SHA256&period=45&digits=7' +
+        '&issuer=AnIssuer';
+      const result = fromKeyUri({uri});
+      should.exist(result);
+      result.should.be.an('object');
+      result.should.include.keys([
+        'secret', 'algorithm', 'digits', 'period', 'accountname', 'issuer'
+      ]);
+      result.accountname.should.equal('test@site.example');
+      result.issuer.should.equal('AnIssuer');
+      result.algorithm.should.equal('SHA-256');
+      result.digits.should.equal(7);
+      result.period.should.equal(45);
+      result.secret.should.equal(secret);
     });
     it('should fail with unknown type', async () => {
-      // FIXME:
+      let result;
+      let err;
+      try {
+        const uri = 'otpauth://hotp?secret=algorithm=BLAKE2b';
+        result = fromKeyUri({uri});
+      } catch(e) {
+        err = e;
+      }
+      should.not.exist(result);
+      should.exist(err);
+      err.name.should.equal('Error');
+      err.message.should.equal('Unknown supported type "hotp".');
     });
     it('should fail with unknown hash algorithm', async () => {
-      // FIXME:
+      let result;
+      let err;
+      try {
+        const uri = 'otpauth://totp?algorithm=BLAKE2b';
+        result = fromKeyUri({uri});
+      } catch(e) {
+        err = e;
+      }
+      should.not.exist(result);
+      should.exist(err);
+      err.name.should.equal('Error');
+      err.message.should.equal('Unsupported hash algorithm "BLAKE2b".');
     });
   });
 });
