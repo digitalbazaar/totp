@@ -1,10 +1,11 @@
-# Example Isomorphic JS Lib Template _(@digitalbazaar/isomorphic-js-lib-template)_
+# Time-based One-Time Password Lib _(@digitalbazaar/totp)_
 
-[![Build status](https://img.shields.io/github/workflow/status/digitalbazaar/isomorphic-js-lib-template/Node.js%20CI)](https://github.com/digitalbazaar/isomorphic-js-lib-template/actions?query=workflow%3A%22Node.js+CI%22)
-[![Coverage status](https://img.shields.io/codecov/c/github/digitalbazaar/isomorphic-js-lib-template)](https://codecov.io/gh/digitalbazaar/isomorphic-js-lib-template)
-[![NPM Version](https://img.shields.io/npm/v/@digitalbazaar/isomorphic-js-lib-template.svg)](https://npm.im/@digitalbazaar/isomorphic-js-lib-template)
+[![Build status](https://img.shields.io/github/workflow/status/digitalbazaar/totp/Node.js%20CI)](https://github.com/digitalbazaar/totp/actions?query=workflow%3A%22Node.js+CI%22)
+[![Coverage status](https://img.shields.io/codecov/c/github/digitalbazaar/totp)](https://codecov.io/gh/digitalbazaar/totp)
+[![NPM Version](https://img.shields.io/npm/v/@digitalbazaar/totp.svg)](https://npm.im/@digitalbazaar/totp)
 
-> A template skeleton repo for (non-Bedrock) JS libraries that run in Node.js and in the browser.
+> A library with Time-based One-Time Password (TOTP) utilities that run in
+Node.js and in the browser.
 
 ## Table of Contents
 
@@ -26,14 +27,14 @@ TBD
 
 ## Install
 
-- Node.js 12+ is required.
+- Node.js 14+ is required.
 
 ### NPM
 
 To install via NPM:
 
 ```
-npm install @digitalbazaar/isomorphic-js-lib-template
+npm install @digitalbazaar/totp
 ```
 
 ### Development
@@ -41,8 +42,8 @@ npm install @digitalbazaar/isomorphic-js-lib-template
 To install locally (for development):
 
 ```
-git clone https://github.com/digitalbazaar/isomorphic-js-lib-template.git
-cd isomorphic-js-lib-template
+git clone https://github.com/digitalbazaar/totp
+cd totp
 npm install
 ```
 
