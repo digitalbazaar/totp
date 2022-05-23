@@ -1,6 +1,6 @@
 # totp Changelog
 
-## 1.0.1 - 2022-05-xx
+## 1.0.1 - 2022-05-22
 
 ### Fixed
 - Ensure `base32Decode` returns a `Uint8Array`.
